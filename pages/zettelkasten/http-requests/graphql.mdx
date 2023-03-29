@@ -1,0 +1,591 @@
+# GraphQL
+
+> GraphQL é uma linguagem de consulta para sua API e um tempo de execução do lado do servidor para executar consultas usando um sistema de tipos que você define para seus dados. O GraphQL não está vinculado a nenhum banco de dados ou mecanismo de armazenamento específico e, em vez disso, é apoiado por seu código e dados existentes.
+
+---
+
+### Arquitetura
+
+A arquitetura do GraphQL é em alto nível composta por **TypeDefs** e **Resolvers**. Os Typedefs definem a caracteristica dos dados e funções, ou seja, os tipos que os caracterizam desde a request a response. O serviço primeiro verifica uma consulta para garantir que ela se refira apenas aos tipos e campos definidos e, em seguida, executa as funções fornecidas para produzir um resultado.
+
+O GraphQL vem com um conjunto padrão de tipos, mas um servidor GraphQL também pode declarar seus próprios tipos personalizados, desde que possam ser serializados em seu formato de transporte.
+
+O *tipo de operação* é *query*, *mutation* ou *subscription* e descreve o tipo de operação que você pretende fazer. O tipo de operação é obrigatório, a menos que você esteja usando a sintaxe abreviada de consulta, caso em que você não pode fornecer um nome ou definições de variável para sua operação.
+
+---
+
+### Typedefs
+
+************Query:************
+
+**Mutation:** 
+
+**Subscription:** 
+
+```graphql
+const typeDefs = gql`
+	# define o tipo do dado a ser manipulado
+  type Todo {
+    id: String
+    title: String
+    description: String
+    completed: Boolean
+  }
+
+	# define a função de busca e o retorno da função -> Array de Todos
+  type Query {
+    getTodos: [Todo]
+  }
+
+	# define as funções e argumetos que irão manipular um recurso
+  type Mutation {
+    addTodo(title: String!, description: String!, completed: Boolean!): [Todo]
+    deleteTodo(id: String!): [Todo]
+    updateTodo(id: String!, title: String, description: String, completed: Boolean): [Todo]
+  }
+`;
+```
+
+---
+
+### Resolvers
+
+```tsx
+// Query
+export const getTodos = (): Todos => {
+    return todos
+}
+
+// Mutation
+export const addTodo = (parent: any, args: Todo): Todos => {
+  todos.push({
+    id: randomUUID(),
+    title: args.title,
+    description: args.description,
+    completed: args.completed,
+  });
+  return todos;
+};
+```
+
+---
+
+### Schema
+
+```jsx
+import * as mutation from '../resolvers/mutation'
+import * as query from '../resolvers/query';
+
+const resolvers = {
+  Query: query,
+  Mutation: mutation,
+};
+
+// build schema
+const server = new ApolloServer(schema);
+
+server.listen({ port: APOLLO_SERVER_PORT }).then(({ url }) => {
+  console.log(`🚀  Server ready at ${url}`);
+});
+```
+
+---
+
+### Type system
+
+- **Object types and fields**
+    - `Character`é um *tipo de objeto GraphQL* , o que significa que é um tipo com alguns campos. A maioria dos tipos em seu esquema serão tipos de objeto.
+    - Os atributos `name` e `appearsIn` são campos do tipo `Character`
+    - `String` é um dos tipos escalares internos - esses são tipos que resolvem para um único objeto escalar e não podem ter subseleções na consulta.
+    - `String!` significa que o campo não pode ser nulo.
+    - `[Episode!]!` representa um array de `Episode`. Como também é **non-nullable**, você sempre pode esperar um array (com zero ou mais itens) ao consultar. E como `Episode!` também é **non-nullable**, você sempre pode esperar que cada item do array seja um `Episode`.
+    
+    ```graphql
+    type Character {
+      name: String!
+      appearsIn: [Episode!]!
+    }
+    ```
+    
+- **Root Operation Types**
+    - São os tipos padrões de consulta de um recurso e alteração de um recurso.
+    
+    ```graphql
+    schema {
+      query: Query
+      mutation: Mutation
+    }
+    ```
+    
+- **Scalar types**
+    - Um tipo de objeto GraphQL tem um nome e campos, mas em algum momento esses campos precisam resolver alguns dados concretos
+    
+    > `Int`: A signed 32‐bit integer
+    `Float`: A signed double-precision floating-point value.
+    `String`: A UTF‐8 character sequence.
+    `Boolean`: `true` or `false`.
+    `ID`: O tipo escalar ID representa um identificador exclusivo, geralmente usado para buscar novamente um objeto ou como chave para um cache. O tipo de ID é serializado da mesma forma que uma String.
+    > 
+- **Personal Scalars**
+    - Na maioria das implementações de serviço GraphQL, também há uma maneira de especificar tipos escalares personalizados. Por exemplo, poderíamos definir um tipo `Date`.
+    
+    ```graphql
+    type Event {
+      id: ID!
+      date: Date!
+    }
+    
+    ```
+    
+    ```tsx
+    import { GraphQLScalarType, Kind } from 'graphql';
+    
+    const dateScalar = new GraphQLScalarType({
+      name: 'Date',
+      description: 'Date custom scalar type',
+      serialize(value: Date) {
+        return value.getTime(); // Convert outgoing Date to integer for JSON
+      },
+      parseValue(value: number) {
+        return new Date(value); // Convert incoming integer to Date
+      },
+      parseLiteral(ast) {
+        if (ast.kind === Kind.INT) {
+          // Convert hard-coded AST string to integer and then to Date
+          return new Date(parseInt(ast.value, 10));
+        }
+        // Invalid hard-coded value (not an integer)
+        return null;
+      },
+    });
+    ```
+    
+    ```jsx
+    const resolvers = {
+      Date: dateScalar,
+    };
+    ```
+    
+- **Enumeration types**
+    - Também chamados de ***Enums*** , os tipos de enumeração são um tipo especial de escalar restrito a um conjunto específico de valores permitidos. Isso permite que você:
+        1. Valide se qualquer argumento desse tipo é um dos valores permitidos.
+        2. Comunicar através do sistema de tipos que um campo sempre será um de um conjunto finito de valores.
+    
+    ```jsx
+    /*  Isso significa que onde quer que usemos o tipo ***Episode*** em nosso esquema,
+    		esperamos que seja exatamente um de **NEWHOPE**, EMPIRE ou JEDI.
+    */
+    enum Episode {
+      NEWHOPE
+      EMPIRE
+      JEDI
+    }
+    ```
+    
+- **Lists and Non-Null**
+    - Aqui, estamos usando um tipo `String` e marcando-o como *Non-Null* adicionando um ponto de exclamação `!`após o nome do tipo
+    
+    ```graphql
+    type Character {
+      name: String!
+      appearsIn: [Episode]!
+    }
+    ```
+    
+    - Em listas adiciona-se o tipo do dado da lista entre colchetes e se os valores internos são obrigatórios não-nulos e se o field retorna sempre uma lista não nula com `!`
+    
+    ```graphql
+    type Character {
+      nonNull: [String!]!      # ['a', null, 'b'] -> error || ['a', 'b'] || [] -> OK
+    	valueNull: [String]!     # null -> error | [] -> OK
+    	listNull: [String!]      # ['a', null] -> error || [] -> OK
+    	listValueNull: [String]  # ['a', 'b', null] || [] -> OK
+    }
+    ```
+    
+- **Interfaces**
+    - Uma ***Interface*** é um tipo abstrato que inclui um determinado conjunto de campos que um tipo deve incluir para implementar a interface.
+    
+    ```graphql
+    interface Character {
+      id: ID!
+      name: String!
+      friends: [Character]
+      appearsIn: [Episode]!
+    }
+    ```
+    
+    - Isso significa que qualquer tipo que *implemente* `Character` precisa ter esses campos exatos, com esses argumentos e tipos de retorno.
+    
+    ```graphql
+    type Human implements Character {
+      id: ID!
+      name: String!
+      friends: [Character]
+      appearsIn: [Episode]!
+      starships: [Starship]
+      totalCredits: Int
+    }
+    
+    type Droid implements Character {
+      id: ID!
+      name: String!
+      friends: [Character]
+      appearsIn: [Episode]!
+      primaryFunction: String
+    }
+    ```
+    
+    ```graphql
+    # query
+    query HeroForEpisode($ep: Episode!) {
+      hero(episode: $ep) {
+        name
+        ... on Droid {
+          primaryFunction
+        }
+        ... on Human {
+          starships
+    			totalCredits
+        }
+      }
+    }
+    ```
+    
+- **Union types**
+    - Os tipos de união são muito semelhantes às interfaces, mas não especificam nenhum campo comum entre os tipos.
+    
+    ```graphql
+    union SearchResult = Human | Droid | Starship
+    ```
+    
+    - Sempre que retornamos um `SearchResult` tipo em nosso esquema, podemos obter um `Human`, um `Droid`ou um `Starship`. Observe que os **membros de um tipo de união precisam ser tipos de objetos concretos**; você não pode criar um tipo de união a partir de interfaces ou outras uniões.
+    
+    ```graphql
+    # Necessário utilizar fragments
+    {
+      search(text: "an") {
+        __typename
+        ... on Human {
+          name
+          height
+        }
+        ... on Droid {
+          name
+          primaryFunction
+        }
+        ... on Starship {
+          name
+          length
+        }
+      }
+    }
+    ```
+    
+- **Input types**
+    - Input types permitem criar e passar objetos complexo. Os input types são exatamente iguais aos tipos de objetos regulares, mas com a palavra-chave `input` em vez de `type`
+    - Os campos em um input type podem se referir a input types, mas você não pode misturar input e output types em seu schema.
+    - Os input types também não podem ter argumentos em seus campos.
+    
+    ```graphql
+    input ReviewInput {
+      stars: Int!
+      commentary: String
+    }
+    ```
+    
+    ```graphql
+    # mutation
+    mutation CreateReviewForEpisode($ep: Episode!, $review: ReviewInput!) {
+      createReview(episode: $ep, review: $review) {
+        stars
+        commentary
+      }
+    }
+    
+    # args
+    {
+      "ep": "JEDI",
+      "review": {
+        "stars": 5,
+        "commentary": "This is a great movie!"
+      }
+    }
+    
+    ```
+    
+
+---
+
+### Relacionamentos
+
+> As consultas do GraphQL podem percorrer objetos relacionados e seus campos, permitindo que os clientes busquem muitos dados relacionados em uma solicitação, em vez de fazer várias viagens de ida e volta, como seria necessário em uma arquitetura REST clássica.
+> 
+
+```graphql
+# query
+hero {
+    name
+    friends {
+      name
+    }
+  }
+}
+
+# Generate
+{
+  "data": {
+    "hero": {
+      "name": "R2-D2",
+      "friends": [
+        {
+          "name": "Luke Skywalker"
+        },
+        {
+          "name": "Han Solo"
+        },
+        {
+          "name": "Leia Organa"
+        }
+      ]
+    }
+  }
+}
+```
+
+---
+
+### Argumentos
+
+> Em um sistema como REST, você só pode passar um único conjunto de argumentos - os parâmetros de consulta e os segmentos de URL em sua solicitação. Mas no GraphQL, cada campo e objeto aninhado pode obter seu próprio conjunto de argumentos, tornando o GraphQL um substituto completo para fazer várias buscas de API. Você pode até passar argumentos para campos escalares, para implementar transformações de dados uma vez no servidor, em vez de em cada cliente separadamente.
+> 
+- **Todos os argumentos são nomeados. Ao contrário de linguagens como JavaScript e Python, onde as funções recebem uma lista de argumentos ordenados, todos os argumentos no GraphQL são passados especificamente pelo nome.**
+- **Os argumentos podem ser obrigatórios ou opcionais. Quando um argumento é opcional, podemos definir um *valor padrão.***
+
+```graphql
+# Query
+{
+  human(id: "1000") {
+    name
+    height(unit: FOOT)
+    length(unit: LengthUnit = METER): Float
+  }
+}
+
+# Produce
+{
+  "data": {
+    "human": {
+      "name": "Luke Skywalker",
+      "height": 5.6430448
+    }
+  }
+}
+```
+
+---
+
+### Aliases
+
+> Os campos do objeto de resultado correspondem ao nome do campo na consulta, mas não incluem argumentos, você não pode consultar diretamente o mesmo campo com argumentos diferentes. No exemplo abaixo, os dois `hero`campos teriam entrado em conflito, mas como podemos alias a nomes diferentes, podemos obter os dois resultados em uma solicitação.
+> 
+
+```graphql
+# Query
+{
+  empireHero: hero(episode: EMPIRE) {
+    name
+  }
+  jediHero: hero(episode: JEDI) {
+    name
+  }
+}
+
+# Produce
+{
+  "data": {
+    "empireHero": {
+      "name": "Luke Skywalker"
+    },
+    "jediHero": {
+      "name": "R2-D2"
+    }
+  }
+}
+```
+
+---
+
+### **Variáveis**
+
+- As definições de variáveis podem ser opcionais (`String`) ou obrigatórias (`String!`). Se o campo para o qual você está passando a variável requer um argumento não nulo, a variável também deve ser obrigatória.
+- As variáveis são declaradas como argumento de função `$variable` `Type!`
+- Variáveis padrão (`$completed: Boolean = false`)
+
+```graphql
+mutation AddTodo($title: String! $description: String! $completed: Boolean = false) {
+    addTodo(title: $title, description: $description, completed: $completed) {
+      id
+      title
+      description
+      completed
+    }
+  }
+```
+
+```tsx
+const [addTodo] = useMutation(ADD_TODO, { update: updateTodoCache });
+addTodo({ variables: { title, description, completed: false } });
+```
+
+---
+
+### **Directives**
+
+> `@include`: por exemplo, podemos imaginar um componente de UI que possui uma visão resumida e detalhada, onde um inclui mais campos que o outro.
+
+• `@include(if: Boolean)`Apenas inclua este campo no resultado se o argumento for `true`.
+• `@skip(if: Boolean)`Ignore este campo se o argumento for `true`.
+> 
+
+```graphql
+query Hero($episode: Episode, $withFriends: Boolean!) {
+  hero(episode: $episode) {
+    name
+    friends @include(if: $withFriends) {
+      name
+    }
+  }
+}
+
+```
+
+```graphql
+# Variables with directive false
+{
+  "episode": "JEDI",
+  "withFriends": false
+}
+
+# Produces this
+{
+  "data": {
+    "hero": { "name": "R2-D2" }
+  }
+}
+```
+
+```graphql
+# Variables with directive true
+{
+  "episode": "JEDI",
+  "withFriends": true
+}
+
+# Produces this
+{
+  "data": {
+    "hero": {
+      "name": "R2-D2",
+      "friends": [
+        { "name": "Luke Skywalker" },
+        { "name": "Han Solo" },
+        { "name": "Leia Organa" }
+      ]
+    }
+  }
+}
+```
+
+---
+
+### Mutation
+
+- Enquanto os campos de **consulta são executados em paralelo**, os **campos de mutação são executados em série**, um após o outro. Isso significa que, se enviarmos duas `incrementCredits`mutações em uma solicitação, a primeira terá a garantia de terminar antes que a segunda comece.
+- 
+
+---
+
+### **Inline Fragments**
+
+- Se você estiver consultando um campo que retorna uma interface ou um tipo de união, precisará usar *fragmentos embutidos* para acessar dados no tipo concreto subjacente.
+
+```graphql
+# interface
+interface Character {
+  id: ID!
+  name: String!
+  friends: [Character]
+  appearsIn: [Episode]!
+}
+
+# types
+type Human implements Character {
+  id: ID!
+  name: String!
+  friends: [Character]
+  appearsIn: [Episode]!
+  starships: [Starship]
+  totalCredits: Int
+}
+
+type Droid implements Character {
+  id: ID!
+  name: String!
+  friends: [Character]
+  appearsIn: [Episode]!
+  primaryFunction: String
+}
+
+# Object type
+type hero {
+	episode: [Droid]
+}
+```
+
+```graphql
+# query
+query HeroForEpisode($ep: Episode!) {
+  hero(episode: $ep) {
+    name
+    ... on Droid {
+      primaryFunction
+    }
+    ... on Human {
+      height
+    }
+  }
+}
+
+# args
+{
+  "ep": "JEDI"
+}
+```
+
+---
+
+### **Metacampos**
+
+- Dado que existem algumas situações em que você não sabe que tipo você receberá de volta do serviço GraphQL, você precisa determinar como lidar com esses dados no cliente. O GraphQL permite que você solicite `__typename`, um metacampo, em qualquer ponto de uma consulta para obter o nome do tipo de objeto naquele ponto.
+
+```graphql
+{
+  search(text: "an") {
+    __typename
+    ... on Human {
+      name
+    }
+    ... on Droid {
+      name
+    }
+    ... on Starship {
+      name
+    }
+  }
+}
+```
+
+---
+
+### Validation

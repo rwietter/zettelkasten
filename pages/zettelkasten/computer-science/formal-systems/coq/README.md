@@ -1,0 +1,2 @@
+- [Automated Theorem Proving](https://en.wikipedia.org/wiki/Automated_theorem_proving)
+- [Automating Theorem Proving with SMT](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/12/krml234.pdf)

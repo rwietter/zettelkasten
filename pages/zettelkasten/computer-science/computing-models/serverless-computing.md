@@ -1,0 +1,7 @@
+## Serverless
+
+Serverless é um modelo de execução de computação em nuvem em que o provedor de nuvem aloca recursos de máquina sob demanda, cuidando dos servidores em nome de seus clientes. Os desenvolvedores de aplicativos Serverless não estão preocupados com planejamento de capacidade , configuração, gerenciamento, manutenção, tolerância a falhas ou dimensionamento de contêineres, VMs ou servidores físicos. A computação sem servidor não armazena recursos em memória volátil; a computação é feita em rajadas curtas com os resultados persistidos no armazenamento. Quando um aplicativo não está em uso, não há recursos de computação alocados para o aplicativo. O preço é baseado na quantidade real de recursos consumidos por um aplicativo.
+
+Os fornecedores Serverless oferecem tempos de execução de computação, também conhecidos como plataformas Function as a Service (FaaS), que executam a lógica do aplicativo, mas não armazenam dados. Além disso, uma arquitetura Serverless significa que desenvolvedores não precisam gastar tempo configurando e ajustando políticas ou sistemas de escalonamento automático; o provedor de nuvem é responsável por dimensionar a capacidade de acordo com a demanda.
+
+<img src="https://www.xenonstack.com/hubfs/xenonstack-aws-serverless-computing.png" width="80%">

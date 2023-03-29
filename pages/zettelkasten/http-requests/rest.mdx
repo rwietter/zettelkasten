@@ -1,0 +1,278 @@
+# Representational State Transfer
+
+### O HTTP
+
+O **Hypertext Transfer Protocol** (HTTP) é um protocolo que manipula toda troca de dados na Rede Mundial de Computadores, este protocolo atua no formato cliente-servidor, ou seja, o cliente (usuário) que inicia o processo de requisição. O HTTP é um protocolo que atua na camada de aplicação, o que possibilita que ele seja enviado sobre o protocolo TCP, que por sua vez, criptografa a conexão com TLS.
+
+Cada mensagem do HTTP, pode ser uma requisição (**Request**) ou resposta (**Response**). Um servidor fica ouvindo por requisições e analisa cada mensagem recebida e responde a essa requisição com uma ou mais mensagens.
+
+O alvo de requisição é chamado de recurso (**Resource**). O HTTP fornece uma interface que define o que compõe cada parte do recurso. Além disso, cada recurso é identificado por uma URI (Uniform Resource Identifier).
+
+### Recurso
+
+A URL pode ser vista quando você acessa o navegador da web ou mobile. Quando você entra em um website, aparece a URL da página em que você se encontra. Veja um exemplo:
+
+```bash
+https://domain.something.org
+https://domain.something.org/en-US/Learn/
+https://domain.something.org/pt-BR/search?q=URL
+```
+
+O Recurso é uma entidade que você pode acessar por meio do domínio, por exemplo:
+
+```bash
+https://app.com.br/**users**
+https://app.com.br/**cursos**
+```
+
+Já a URI, por sua vez, é uma string contendo caracteres que identificam um recurso físico ou lógico, ou seja, é um superconjunto de URL que identifica um recurso pela URL. A sintaxe da URI é mostrada abaixo:
+
+```bash
+scheme:[//authority]path[?query][#fragment]
+```
+
+Onde o *authority*, divide-se em:
+
+```bash
+authority = [userinfo@]host[:port] = username:password@localhost:8080
+```
+
+A URL pode ser vista quando você acessa o navegador da web ou mobile. Quando você entra em um website, aparece a URL da página em que você se encontra. Veja um exemplo:
+
+A imagem abaixo representa a anatomia que a interface HTTP implementa:
+    
+Por enquanto, precisamos ter em mente que o cliente (navegador), faz uma requisição e envia os dados pela *request* e o servidor envia os dados como resposta.
+
+---
+
+## Conceitos de REST
+
+### Stateless
+
+Um protocolo sem estado é um mecanismo de comunicação em que nem o remetente nem o destinatário mantêm dados. Possibilita a comunicação entre diversos sistemas sem a necessidade do armazenamento de nenhum estado externo. Protocolos sem estado são frequentemente utilizados em sistemas distribuídos onde seria impraticável manter informações de estado.
+
+### Uniform Interface
+
+Ele permite que os clientes conversem com o servidor em um idioma padrão, independentemente de sua arquitetura. Stateless HTTP (HyperText Transfer Protocol) é usado para esta comunicação padronizada.
+
+### Cache
+
+O cache é um método que pode ser usado para aprimorar o desempenho de um aplicativo da web. O servidor pode salvar a resposta à solicitação de um cliente para um recurso para acomodar solicitações subsequentes para o mesmo recurso.
+
+No cliente, um método semelhante pode ser aplicado. Tornar as solicitações subsequentes mais rápidas e eficazes pode aprimorar a experiência do usuário.
+
+### Client-Server Architecture
+
+O cliente e o servidor não devem ser interdependentes para evitar possíveis conflitos. Você não deve esperar que o cliente seja afetado pelas alterações feitas no servidor e vice-versa.
+
+### Layered Architecture
+
+Cada camada da arquitetura adiciona uma hierarquia distinta. Esse design é vantajoso porque permite um baixo acoplamento entre os níveis, facilitando a alteração ou atualização de uma camada sem afetar as outras. Além disso, esse design permite que dados e funcionalidades sejam encapsulados em cada camada, aumentando a segurança e evitando comportamentos inesperados.
+
+---
+
+### Dados
+
+Os dados de uma requisição podem ser passadas de diferentes formas, os dados da requisição podem ser enviados pelo corpo da requisição (request body), por parâmetros de consulta (query params) e por parâmetros de rota (route params). Veja um exemplo de como eles se parecem:
+
+```javascript
+request body = { firstName: "YourName", age: 18 }
+query query = "?something=1"
+route params = "/users/1"
+```
+        
+### Métodos
+
+O HTTP, também, fornece métodos semânticos para crias as rotas de requisições, por exemplo: GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS e TRACE.
+
+```markdown
+GET       | GET é utilizado para recuperar uma informação de recursos, não deve-se alterar dados.
+POST      | Esse metódo diz respeito a alteração do estado, ou seja, modificar um dado existente.
+PUT       | Atualiza um recurso ou cria se não existir
+DELETE    | Deleta um recurso específico
+PATCH     | É utilizado para aplicar, parcialmente, modificações em um recurso existente
+```
+        
+### Stateless
+
+Outro ponto importante sobre o HTTP, é que ele é Stateless, ou seja, o protocolo não tem estado. Isto é, não há relação de estado entre requisições e respostas e não tem como o HTTP armazenar o estado entre requisições ou respostas.
+
+Para guardar um estado entre requisições e respostas, é recomendado utilizar uma API do navegador, os Cookies ou LocalStorage, essas estruturas permitem que você possa armazenar dados no cliente por um determinado período de tempo e mandar como requisições futuras para o servidor, por exemplo, em um gerenciamento de sessão.
+
+## Conclusão
+
+Quando você entra em um site, o navegador faz um requisição ao servidor, o cliente (navegador), estabelece uma conexão entre o protocolo TCP/IP (Transmission Control Protocol) e o servidor de destino, o servidor vai fazer o quer é necessário e retornar uma resposta pelo HTTP com os dados que poderão ser apresentados em tela ou não.
+
+Vamos fazer uma requisição ao site da UFSM, precisamos informar o método, o recurso em que desejo fazer uma requisição e a versão do HTTP.
+
+```bash
+GET www.ufsm.br HTTP/1.1
+```
+
+A resposta do servidor indica que foi um sucesso e retornou a versão HTTP, o código de status, a data e algumas headers do próprio HTTP.
+
+```json
+HTTP/1.1 200 OK
+Date: Wed, 17 Mar 2021 23:33:29 GMT
+Content-Type: text/html; charset=UTF-8
+Link: <https://www.ufsm.br/wp-json/>; rel="https://api.w.org/"
+Link: <https://www.ufsm.br/wp-json/wp/v2/pages/1833>; rel="alternate"; type="application/json"
+Link: <https://www.ufsm.br/>; rel=shortlink
+X-Varnish: 287314728 286272324
+Age: 436
+Via: 1.1 varnish (Varnish/5.2)
+X-Cache: cached
+Accept-Ranges: bytes
+Content-Length: 124332
+```
+
+---
+
+## REST Methods
+
+### GET
+
+- GET é utilizado para recuperar uma informação de recursos apenas, alterar um estado com método get é uma violação do REST. Além disso, GET deve ser idempotente, ou seja, várias requests idênticas devem produzir o mesmo resultado todas as vezes até que outro método POST ou PUT altere o estado.
+
+Se o recurso for encontrado:  **200 (OK)**
+Se o recurso não for encontrado: **404 (NOT FOUND)**
+
+```markdown
+HTTP GET http://www.appdomain.com/users
+HTTP GET http://www.appdomain.com/users?size=20&page=5
+HTTP GET http://www.appdomain.com/users/123
+HTTP GET http://www.appdomain.com/users/123/address
+```
+    
+### POST
+
+- POST é utilizado para criar um recurso, por exemplo, cadastrar um recurso em uma tabela do banco de dados.
+- As respostas a este método não podem ser armazenadas em cache, a menos que a resposta inclua os campos de cabeçalho `Cache-Control` ou `Expires` apropriados.
+- POST não é seguro nem idempotente.
+
+**201 (CREATED)**: recurso criado com sucesso
+**204 (NO CONTENT)**: ação não resulta em um recurso que possa ser identificado por um URI
+
+
+```bash
+HTTP POST http://www.appdomain.com/users
+HTTP POST http://www.appdomain.com/users/123/accounts
+```
+    
+### PUT
+
+- PUT é utilizado para atualizar o recurso existente (se o recurso não existir, você pode decidir criar um novo recurso ou não). Se um novo recurso tiver sido criado, o servidor de origem DEVE informar o agente do usuário por meio do código de resposta HTTP **201 (CREATED)** e, se um **recurso existente for modificado**, os códigos de resposta **200 (OK)** ou **204 (NO CONTENT)** DEVEM ser enviados para indicar a conclusão da solicitação.
+- As respostas a este método não podem ser armazenadas em cache.
+
+**201 (CREATED)**: recurso criado
+**200 (OK) ||  204 (NO CONTENT)**: recurso modificado
+
+```bash
+HTTP PUT http://www.appdomain.com/users/123
+HTTP PUT http://www.appdomain.com/users/123/accounts/456
+```
+    
+### DELETE
+
+- DELETE é usado para excluir recursos.
+- As operações DELETE são idempotentes.
+- As respostas a este método não podem ser armazenadas em cache.
+
+**200 (OK)**: deletado com sucesso
+**202 (ACCEPTED)**: deletado com sucesso e retorno com corpo de resposta
+**204 (NO CONTENT)**: ação colocada em uma fila
+    
+```bash
+HTTP DELETE http://www.appdomain.com/users/123
+HTTP DELETE http://www.appdomain.com/users/123/accounts/456
+```
+    
+### PATCH
+
+- As requests com método **PATCH** devem fazer um **update parcial** em um recurso.
+- O método **PATCH** é a escolha correta para **atualizar parcialmente um recurso existente** e **PUT** só deve ser usado se você estiver **atualizando um recurso em sua totalidade**.
+    
+```js
+HTTP GET /users/1
+
+[
+  { "op": "replace", "path": "/email", "value": "new.email@example.org" }
+]
+
+// result
+{id: 1, username: 'admin', email: 'email@example.org'}
+```
+
+**200 (OK) ou 204 (NO CONTENT)**: atualização bem sucedida
+**404 (NOT FOUND)**: recurso ou id não encontrado
+    
+### IDEMPOTÊNCIA
+
+- O termo idempotente é usado de forma mais abrangente para descrever uma **operação que produzirá os mesmos resultados se executada uma ou várias vezes**. A idempotência é uma propriedade útil em muitas situações, pois significa que uma operação pode ser repetida ou repetida com a freqüência necessária sem causar efeitos indesejados. Com operações não idempotentes, o algoritmo pode ter que controlar se a operação já foi executada ou não.
+- Na especificação HTTP, os métodos **GET, HEAD, PUT e DELETE são métodos idempotentes declarados**. Outros métodos OPTIONS e TRACE NÃO DEVEM ter efeitos colaterais, portanto, ambos são inerentemente idempotentes.
+- Métodos PATCH e POST não são idempotentes e podem causar side effects.
+
+### Resumo
+
+- POST - CREATE
+- GET - READ
+- PUT - UPDATE
+- PACTH - PARTIAL UPDATE
+- DELETE - DELETE
+
+---
+
+### Successful response
+
+```js
+{
+	message: 'Successful login',
+	statusCode: 401,
+	body: {
+    ...data
+  }
+}
+```
+
+### Error response
+
+```js
+
+{
+	statusCode: 401,
+	body: {
+		name: 'USER_NOT_FOUND',
+		message: 'User not found'
+	}
+}
+```
+
+### Browser response
+
+```bash
+{
+	"config": ,
+	"data": {
+		"body": {
+			"message": "Successful login",
+      "statusCode": 200,
+      "body": {
+        "id": 1,
+        "username": "admin",
+        "email": ""
+		},
+	},
+	"headers": ,
+	"request": ,
+	"status": ,
+	"statusText": ,
+}
+```
+
+---
+
+### Referência
+
+- [**MDN**](https://developer.mozilla.org/pt-BR/docs/Web/HTTP)
+- [**REST ARCH**](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)
+- [**REST**](https://restfulapi.net/)

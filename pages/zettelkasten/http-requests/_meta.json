@@ -1,0 +1,9 @@
+{
+	"rest": "Rest",
+	"graphql": "GraphQL",
+	"trpc": "tRPC",
+	"grpc": "gRPC",
+	"axios": "Axios",
+	"swr": "SWR",
+	"react-query": "React Query"
+}

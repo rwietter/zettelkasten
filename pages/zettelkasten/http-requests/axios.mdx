@@ -1,0 +1,13 @@
+# Axios
+
+Axios is a promise based HTTP client for the browser and JavaScript.
+It is a very popular library for making HTTP requests and is used in many projects. 
+
+## Typescript
+
+```ts {2}
+const getPosts = async () => {
+  const { data } = await axios.get<Posts>('/url');
+  return data;
+}
+```

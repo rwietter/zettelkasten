@@ -1,0 +1,1 @@
+Solana é uma blockchain de alta velocidade e baixo custo com um pequeno impacto ambiental. Sua moeda nativa é Solana e usa o ticker SOL. Solana (SOL) é usado para pagar as taxas de transação envolvidas na compra e venda de NFTs.
