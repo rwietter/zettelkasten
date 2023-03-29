@@ -1,4 +1,4 @@
-export default {
+const config = {
   logo: (
     <>
       <svg width="24" height="24" viewBox="0 0 24 24">
@@ -42,5 +42,8 @@ export default {
     return {
       titleTemplate: '%s – rwietter'
     }
-  }
+  },
+  staticImage: true
 }
+
+export default config

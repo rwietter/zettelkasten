@@ -43,7 +43,7 @@ Múltiplos lambdas podem ser omitidos
 
 A variável *x* é ligada por *λ* na expressão: `λ x.e` caso a variável não seja ligada, então é considerada *livre*. As variáveis livres de um termo são definidas como:
 
-![livre-atada](lambda-livre-atada.png)
+<!-- ![livre-atada](lambda-livre-atada.png) -->
 
 Para a expressão abaixo, y é ligada e x é uma variável livre:
 

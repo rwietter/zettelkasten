@@ -55,7 +55,7 @@ Um termo lambda se parece com "(*λ variablename : type1.term*)" e tem o tipo "*
 
 Um exemplo de um termo lambda é esta função que duplica seu argumento `(λ x: nat. (add xx)): nat → nat`
 
-![lambda calculus](lambda-calculus.png)
+<!-- ![lambda calculus](lambda-calculus.png) -->
 
 **Propriedades booleanas**
 
@@ -66,7 +66,7 @@ Um exemplo de um termo lambda é esta função que duplica seu argumento `(λ x:
 (λxy.(x x) y)
 ```
 
-- ![if-then-else](lambda-if-else.png)
+<!-- - ![if-then-else](lambda-if-else.png) -->
 
 ---
 
