@@ -1,0 +1,12 @@
+# Font Metrics Override Descriptors
+
+_F-mods_ permitem que façamos configurações de _CSS_ que fazem com quem textos em vários browsers sejam renderizados consistentemente da mesma forma, evitando problemas de alinhamento e melhorando a consistência entre vários browsers
+
+```css
+@font-face {
+	font-family: some-font; src: ...;
+	ascent-override: 73%;
+	descent-override: 25%;
+	line-gap-override: 2%;
+}
+```

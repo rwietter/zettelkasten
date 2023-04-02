@@ -1,0 +1,303 @@
+# Object Types
+
+### Anonymus Object Types
+
+```ts
+function greet(person: { name: string; age: number }) {
+  return "Hello " + person.name;
+}
+```
+
+---
+
+### Named Object Types
+
+```ts
+type Person = {
+  name: string;
+  age: number;
+};
+
+function greet(person: Person) {
+  return "Hello " + person.name;
+}
+```
+
+---
+
+### Optional Properties
+
+Na maior parte do tempo, nos encontraremos lidando com objetos que podem ter um conjunto de propriedades. Nesses casos, podemos marcar essas propriedades como opcionais adicionando um ponto de interrogação (?) ao final de seus nomes.
+
+```ts
+interface PaintOptions {
+  shape: Shape;
+  xPos?: number;
+  yPos?: number;
+}
+ 
+function paintShape(opts: PaintOptions) {
+    let xPos = opts.xPos === undefined ? 0 : opts.xPos; // default to 0 if no xPos is provided | type guard
+  // ...
+}
+ 
+const shape = getShape();
+paintShape({ shape });
+paintShape({ shape, xPos: 100 });
+paintShape({ shape, yPos: 100 });
+paintShape({ shape, xPos: 100, yPos: 100 });
+```
+
+---
+
+### Readonly Properties
+
+Algumas vezes, queremos criar um objeto que não pode ser alterado após a criação em compile time. Podemos fazer isso usando a palavra-chave readonly.
+
+```ts
+interface Point {
+  readonly x: number;
+  readonly y: number;
+}
+
+let p1: Point = { x: 10, y: 20 };
+
+p1.x = 5; // error! Cannot assign to 'x' because it is a read-only property.
+```
+
+#### Readonly Aliasing Modifiers
+
+Esse comportamento implica que você pode converter um objeto `Person` em um objeto `ReadonlyPerson` sem problemas. No entanto, você não pode converter um objeto `ReadonlyPerson` em um objeto `Person` porque o objeto `ReadonlyPerson` pode ter propriedades que não podem ser alteradas.
+
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+ 
+interface ReadonlyPerson {
+  readonly name: string;
+  readonly age: number;
+}
+ 
+let writablePerson: Person = {
+  name: "Person McPersonface",
+  age: 42,
+};
+ 
+// works
+let readonlyPerson: ReadonlyPerson = writablePerson;
+
+console.log(readonlyPerson.age); // prints '42'
+writablePerson.age++;
+console.log(readonlyPerson.age); // prints '43'
+```
+
+---
+
+### Index Signatures
+
+Às vezes, você não conhece todos os nomes das propriedades de um tipo com antecedência, mas conhece a forma dos valores. Nesses casos, você pode usar uma assinatura de índice para descrever os tipos de valores possíveis, por exemplo:
+
+```ts
+interface StringArray {
+  [index: number]: string;
+}
+
+const myArray: StringArray = getStringArray();
+const secondItem = myArray[1];
+```
+
+Apenas alguns tipos são permitidos para propriedades de assinatura de índice: string, number, symbol, template string patterns, and union types que consistem apenas neles.
+
+#### Readonly Signatures
+
+```ts
+interface ReadonlyStringArray {
+  readonly [index: number]: string;
+}
+```
+
+---
+
+### Extending Types
+
+Os tipos podem ser estendidos para criar novos tipos que incluem todos os membros dos tipos originais. Isso é chamado de herança de tipos.
+
+```ts
+interface BasicAddress {
+  name?: string;
+  street: string;
+  city: string;
+  country: string;
+  postalCode: string;
+}
+ 
+interface AddressWithUnit extends BasicAddress {
+  unit: string;
+}
+```
+
+#### Extending multiple types
+
+```ts
+interface Colorful { color: string; }
+ 
+interface Circle { radius: number; }
+ 
+interface ColorfulCircle extends Colorful, Circle {}
+ 
+const cc: ColorfulCircle = { color: "red", radius: 42 };
+```
+
+---
+
+### Intersection Types
+
+A interseção de tipos cria um novo tipo que contém todos os tipos fornecidos. Isso é útil para combinar vários tipos em um único tipo que tenha todos os membros de todos os tipos.
+
+Um tipo de interseção é definido usando o operador &.
+
+
+```ts
+interface ErrorHandling {
+  success: boolean;
+  error?: { message: string };
+}
+
+interface ArtworksData {
+  artworks: { title: string }[];
+}
+
+interface ArtistsData {
+  artists: { name: string }[];
+}
+
+// These interfaces are composed to have
+// consistent error handling, and their own data.
+type ArtworksResponse = ArtworksData & ErrorHandling;
+type ArtistsResponse = ArtistsData & ErrorHandling;
+
+const handleArtistsResponse = (response: ArtistsResponse) => {
+  if (response.error) {
+    console.error(response.error.message);
+    return;
+  }
+
+  console.log(response.artists);
+};
+
+const handleArtworksResponse = (response: ArtworksResponse) => {
+  if (response.error) {
+    console.error(response.error.message);
+    return;
+  }
+
+  console.log(response.artworks);
+};
+```
+
+---
+
+### Generic Object Types
+
+Vamos imaginar um tipo Box que pode conter qualquer valor - strings, numbers, Giraffes, qualquer coisa.
+
+```ts
+interface Box {
+  contents: unknown;
+}
+```
+
+Em vez disso, podemos criar um tipo Box genérico que declara um parâmetro de tipo. Você pode ler isso como “Um Box é algo cujo conteúdo tem o tipo T”. Mais adiante, quando nos referirmos a Box, devemos fornecer um argumento de tipo no lugar de Type.
+
+
+```ts
+interface Box<T> {
+  contents: T;
+}
+
+let box: Box<string>; // box is an object that contains a contents property of type string
+```
+
+```ts
+function setContents<Type>(box: Box<Type>, newContents: Type) {
+  box.contents = newContents;
+}
+
+let box: Box<string> = { contents: "hello" };
+setContents(box, "world");
+```
+
+Como os aliases de tipo, ao contrário das interfaces, podem descrever mais do que apenas tipos de objeto, também podemos usá-los para escrever outros tipos de tipos auxiliares genéricos.
+
+```ts
+type OrNull<Type> = Type | null;
+type OneOrMany<Type> = Type | Type[];
+```
+
+---
+
+### ReadonlyArray
+
+O tipo ReadonlyArray é uma versão genérica de Array que torna todos os elementos imutáveis. Você pode usar ReadonlyArray em vez de Array para descrever arrays que não devem ser alterados após a criação.
+
+```ts
+function doStuff(values: ReadonlyArray<string>) {
+  // We can read from 'values'...
+  const copy = values.slice();
+  console.log(`The first value is ${values[0]}`);
+  
+  // ...but we can't mutate 'values'.
+  values.push("hello!"); // error!
+}
+
+// Or, using the 'readonly' array type alias
+function doStuff(values: readonly string[]) {} // same as ReadonlyArray
+```
+
+---
+
+### Tuple Types
+
+Um tipo de tupla permite que você especifique um número fixo de elementos em uma matriz, onde o tipo de cada elemento é conhecido. Os tipos de tupla são úteis em APIs fortemente baseadas em convenções, onde o significado de cada elemento é “óbvio”. Isso nos dá flexibilidade em qualquer nome que quisermos para nossas variáveis ​​quando as desestruturarmos. No exemplo acima, fomos capazes de nomear os elementos 0 e 1 para o que quiséssemos.
+
+```ts
+let x: [string, number];
+
+x = ["hello", 10]; // OK
+
+x = [10, "hello"]; // Error because the types are not in the same order.
+
+const x3 = x[3] // Error because the tuple only has 2 elements.
+
+// destructuring
+const [a, b] = x; // OK
+```
+
+#### Optional Tuple Elements
+
+```ts
+let x: [string, number?];
+x = ["hello"]; // OK
+x = ["hello", 10]; // OK
+```
+
+#### Rest Tuple Elements
+
+As tuplas também podem ter elementos rest, que devem ser do tipo array/tupla.
+
+```ts
+type StringNumberBooleans = [string, number, ...boolean[]];
+type StringBooleansNumber = [string, ...boolean[], number];
+type BooleansStringNumber = [...boolean[], string, number];
+```
+
+#### Readonly Tuple Elements
+
+As tuplas tendem a ser criadas e não modificadas na maioria dos códigos, portanto, anotar tipos como tuplas somente leitura quando possível é um bom padrão. Isso também é importante, visto que os literais de array com **asserções const serão inferidos com tipos de tupla somente leitura**.
+
+```ts
+let x: readonly [string, number];
+pair[0] = "hello!"; // Error! Cannot assign to '0' because it is a read-only property.
+```

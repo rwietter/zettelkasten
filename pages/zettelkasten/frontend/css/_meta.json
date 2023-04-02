@@ -1,0 +1,12 @@
+{
+    "effects": "Effects",
+    "fonts": "Fonts",
+    "bem": "BEM",
+    "namespaces": "Namespaces",
+    "tools": "Tools",
+    "content-visibility": "Content Visibility",
+    "font-metrics-override-descriptors": "Font Metrics",
+    "overscroll-behavior": "Overscroll Behavior",
+    "scroll-snap": "Scroll Snap",
+    "scrollbar-gutter": "Scrollbar Gutter"
+}

@@ -1,0 +1,8 @@
+{
+    "rust": "Rust",
+    "typescript": "TypeScript",
+    "shell": "Shell",
+    "go": "Go",
+    "php": "PHP",
+    "java": "Java"
+}

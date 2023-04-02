@@ -1,0 +1,11 @@
+# Overscroll Behavior
+
+A propriedade `overscroll-behavior` nasceu com um único propósito, evitar que o conteúdo atrás de uma modal seja _scrolado_ quando for tentado _scrollar_ na modal.
+
+Isso evita que precisemos dar overflow hidden no conteúdo que fica atrás de uma modal o que simplifica nossos componentes.
+
+```css
+.modal {
+ overscroll-behavior-y: contain;
+}
+```

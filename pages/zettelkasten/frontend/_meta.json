@@ -1,0 +1,10 @@
+{
+    "accessibility": "Accessiblity",
+    "css": "CSS",
+    "ui": "UI",
+    "react": "React",
+    "vue": "Vue",
+    "vite": "Vite",
+    "lighthouse": "Lighthouse",
+    "feature-flags": "Feature Flags"
+}

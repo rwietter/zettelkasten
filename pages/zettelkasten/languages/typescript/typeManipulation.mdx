@@ -1,0 +1,281 @@
+# Type Manipulation
+
+O sistema de tipos do TypeScript é muito poderoso porque permite expressar tipos em termos de outros tipos. Isso permite que você crie tipos personalizados que sejam baseados em outros tipos. Isso também permite que você crie tipos que sejam uma combinação de tipos existentes, como uniões, interseções e tipos genéricos.
+
+### Generics
+
+Generics são úteis para, assim como abstrações, criar componentes reutilizáveis que podem trabalhar com um tipo de dados específico. Isso permite que você escreva código que pode ser reutilizado para trabalhar com diferentes tipos de dados.
+
+```ts
+function identity<T>(arg: T): T {
+  return arg;
+}
+```
+
+#### Generic Interfaces
+
+```ts
+interface GenericIdentityFn {
+  <Type>(arg: Type): Type;
+}
+ 
+function identity<Type>(arg: Type): Type {
+  return arg;
+}
+ 
+let myIdentity: GenericIdentityFn = identity;
+
+// -------------- Or --------------
+interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
+
+let myIdentity: GenericIdentityFn<number> = identity;
+```
+
+#### Generic Classes
+
+Uma classe genérica tem uma forma semelhante a uma interface genérica. As classes genéricas têm uma lista de parâmetros de tipo genérico entre colchetes angulares (<>) após o nome da classe.
+
+Assim como na interface, colocar o parâmetro de tipo na própria classe nos permite garantir que todas as propriedades da classe estejam funcionando com o mesmo tipo.
+
+```ts
+class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+ 
+let myGenericNumber = new GenericNumber<number>();
+```
+
+#### Generic Constraints
+
+Você pode restringir os tipos que podem ser usados com os parâmetros de tipo genérico. Para fazer isso, você deve definir uma interface que descreva os requisitos que o tipo deve atender. Em seguida, você pode usar essa interface como uma restrição para o tipo genérico.
+
+```ts
+interface Lengthwise {
+  length: number;
+}
+
+function loggingIdentity<Type extends Lengthwise>(arg: Type): Type {
+  console.log(arg.length); // 10
+  return arg;
+}
+
+loggingIdentity(3); // Error
+loggingIdentity({ length: 10, value: 3 }); // Ok
+```
+
+##### Type Parameters in Generic Constraints
+
+Você pode declarar um parâmetro de tipo restrito por outro parâmetro de tipo. Por exemplo, aqui gostaríamos de obter uma propriedade de um objeto dado seu nome. Gostaríamos de garantir que não estamos capturando acidentalmente uma propriedade que não existe no obj, então colocaremos uma restrição entre os dois tipos.
+
+
+```ts
+function getProperty<Type, Key extends keyof Type>(obj: Type, key: Key) {
+  return obj[key];
+}
+ 
+let x = { a: 1, b: 2, c: 3, d: 4 };
+ 
+getProperty(x, "a"); // Ok
+getProperty(x, "d"); // Ok
+getProperty(x, "m"); // Error | Argument of type '"m"' is not assignable to parameter of type '"a" | "b" | "c" | "d"'.
+```
+
+---
+
+### Keyof Type Operator
+
+O operador keyof é um operador de indexação que retorna o tipo de uma chave de objeto. O operador keyof é útil para restringir o tipo de uma chave de objeto.
+
+```ts
+interface Person {
+  name: string;
+  age: number;
+  location: string;
+}
+
+type K1 = keyof Person; // "name" | "age" | "location"
+type K2 = keyof Person[]; // "length" | "push" | "pop" | "concat" | ...
+type K3 = keyof { [x: string]: Person }; // string | number
+```
+
+K3 é string | number — isso ocorre porque as chaves do objeto JavaScript são sempre convertidas para uma string.
+
+---
+
+### Typeof Type Operator
+
+O operador typeof é um operador de indexação que retorna o tipo de uma variável. O operador typeof é útil para restringir o tipo de uma variável.
+
+```ts
+let a = 10;
+let b = "hello";
+
+type A = typeof a; // number
+type B = typeof b; // string
+```
+
+Isso não é muito útil para tipos básicos, mas combinado com outros operadores de tipo, você pode usar typeof para expressar convenientemente muitos padrões.
+
+```ts
+type Predicate = (x: unknown) => boolean;
+type K = ReturnType<Predicate>; // boolean
+```
+
+Se tentarmos usar `ReturnType` em um nome de função, veremos um erro instrutivo:
+
+```ts
+function f() {
+  return { x: 10, y: 3 };
+}
+type P = ReturnType<f>;
+// Error: Type 'f' does not satisfy the constraint '(...args: any[]) => any'.
+```
+
+Isso ocorre porque `ReturnType` espera que o tipo de entrada seja uma função. Para corrigir isso, precisamos usar o operador typeof para obter o tipo de uma variável que contenha a função.
+
+```ts
+function f() {
+  return { x: 10, y: 3 };
+}
+type P = ReturnType<typeof f>;
+// { x: number, y: number }
+```
+
+---
+
+### Indexed Access Types
+
+Os tipos de acesso indexado permitem que você obtenha o tipo de uma propriedade em um tipo. Isso é útil quando você deseja acessar uma propriedade de um tipo que não sabe o nome.
+
+```ts
+type Person = { age: number; name: string; alive: boolean };
+type Age = Person["age"]; // number
+```
+
+O tipo de indexação é em si um tipo, então podemos usar unions, keyof ou outros tipos inteiramente:
+
+```ts
+type Person = { age: number; name: string; alive: boolean };
+
+type I1 = Person["age" | "name"]; // type I1 = string | number
+ 
+type I2 = Person[keyof Person]; // type I2 = string | number | boolean
+ 
+
+type AliveOrName = "alive" | "name";
+type I3 = Person[AliveOrName]; // type I3 = string | boolean
+```
+
+Você só pode usar tipos ao indexar, o que significa que não pode usar um const para fazer uma referência de variável:
+
+---
+
+### Conditional Types
+
+Os tipos condicionais permitem que você crie tipos que sejam uma união ou interseção de outros tipos baseados em uma condição. Os tipos condicionais são uma maneira poderosa de adicionar inferência de tipo a seu código.
+
+```ts
+type TypeName<T> =
+  T extends string ? "string" :
+  T extends number ? "number" :
+  T extends boolean ? "boolean" :
+  T extends undefined ? "undefined" :
+  T extends Function ? "function" :
+  "object";
+
+type T0 = TypeName<string>;  // "string"
+type T1 = TypeName<"a">;  // "string"
+type T2 = TypeName<true>;  // "boolean"
+type T3 = TypeName<() => void>;  // "function"
+type T4 = TypeName<string[]>;  // "object"
+
+// Distributive conditional types
+// Os tipos condicionais distributivos são uma maneira poderosa de adicionar inferência de tipo a seu código. Eles são um tipo especial de tipos condicionais que distribuem o tipo de uma variável em um tipo unificado.
+type T10 = TypeName<string | (() => void)>;  // "string" | "function"
+type T12 = TypeName<string | string[] | undefined>;  // "string" | "object" | "undefined"
+type T20 = TypeName<string[] | number[]>;  // "object"
+type T22 = TypeName<string[] | number[]>;  // "object"
+type T30 = TypeName<string | number | (() => void)>;  // "string" | "number" | "function"
+```
+
+Extends Animal Type
+
+```ts
+interface Animal {
+  live(): void;
+}
+
+interface Dog extends Animal {
+  woof(): void;
+}
+ 
+type T1 = Dog extends Animal ? number : string; // number
+type T2 = RegExp extends Animal ? number : string; // string
+```
+
+Extends conditional type based on argument
+
+```ts
+interface IdLabel { id: number }
+interface NameLabel { name: string }
+
+type NameOrId<T extends number | string> = T extends number
+  ? IdLabel
+  : NameLabel;
+
+function createLabel<T extends number | string>(idOrName: T): NameOrId<T> {
+  throw "unimplemented";
+}
+ 
+let a = createLabel("typescript"); // NameLabel
+let b = createLabel(2.8); // IdLabel
+let c = createLabel(Math.random() ? "hello" : 42); // NameLabel | IdLabel
+```
+
+#### Conditional Type Constraints
+
+a ramificação verdadeira de um tipo condicional restringirá ainda mais os genéricos pelo tipo que verificamos.
+
+```ts
+type MessageOf<T> = T["message"]; // Error: Type 'T' does not satisfy the constraint 'unknown'.
+```
+
+Mas, se adicionarmos uma restrição ao tipo condicional, o tipo de retorno será mais específico.
+
+```ts
+type MessageOf<T extends { message: unknown }> = T["message"];
+ 
+interface Email {
+  message: string;
+}
+ 
+type EmailMessageContents = MessageOf<Email>;
+```
+
+No entanto, e se quiséssemos que MessageOf aceitasse qualquer tipo e o padrão fosse algo como `never` se uma propriedade de mensagem não estivesse disponível? Podemos fazer isso movendo a restrição e introduzindo um tipo condicional:
+
+```ts
+type MessageOf<T> = T extends { message: unknown } ? T["message"] : never;
+ 
+interface Email {
+  message: string;
+}
+ 
+interface Dog {
+  bark(): void;
+}
+ 
+type EmailMessageContents = MessageOf<Email>; // string
+type DogMessageContents = MessageOf<Dog>; // never
+```
+
+---
+
+### Mapped Types
+
+Os tipos mapeados permitem que você crie novos tipos com base em tipos existentes. Por exemplo, um tipo mapeado pode fazer cada propriedade de um tipo opcional ou somente leitura.
+
+```ts

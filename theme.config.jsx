@@ -1,4 +1,5 @@
 const config = {
+  docsRepositoryBase: 'https://github.com/rwietter',
   logo: (
     <>
       <svg width="24" height="24" viewBox="0 0 24 24">
@@ -12,7 +13,10 @@ const config = {
       </span>
     </>
   ),
-  primaryHue: 164,
+  primaryHue: {
+    dark: 172,
+    light: 203,
+  },
   logoLink: '/',
   project: {
     link: 'https://github.com/rwietter',

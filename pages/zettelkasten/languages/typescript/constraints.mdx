@@ -1,0 +1,39 @@
+# Constraints
+
+Contraints são usados para limitar o tipo de um parâmetro de tipo. Por exemplo, se você quiser que um parâmetro de tipo seja um objeto, você pode usar a constraint `object`.
+
+```ts
+function printObject<T extends object>(obj: T) {
+  console.log(obj);
+}
+```
+
+Considere o exemplo abaixo, essa função aceita qualquer tipo.
+
+```ts
+function merge<U, V>(obj1: U, obj2: V) {
+    return {
+        ...obj1,
+        ...obj2
+    };
+}
+```
+
+Agora considere que queremos restringir a objetos, então:
+
+```ts
+function merge<U extends object, V extends object>(obj1: U, obj2: V) {
+    return {
+        ...obj1,
+        ...obj2
+    };
+}
+```
+
+Da mesma forma para dicionários:
+
+```ts
+function prop<T, K extends keyof T>(obj: T, key: K) {
+    return obj[key];
+}
+```

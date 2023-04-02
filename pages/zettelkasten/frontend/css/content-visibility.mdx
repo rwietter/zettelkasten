@@ -1,0 +1,12 @@
+# Content-Visibility
+
+A propriedade `content-visibility` deve ser usada junto com a propriedade `contain-intrinsic-size`, juntas elas evitam que os filhos do container que foram atribuídas sejam carregados até que a _viewport_ contenha o container atribuído.
+
+É uma estratégia usada para evitar que seja carregado mais elementos do que o necessário no processo de _painting_, assim é carregado apenas o que está no _viewport_ fazendo o site carregar mais rápido.
+
+```css
+.container {
+ content-visibility: auto;
+ contain-intrinsic-size: 0 500px;
+}
+```

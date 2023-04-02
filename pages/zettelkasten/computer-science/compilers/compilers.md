@@ -144,6 +144,7 @@ Mas algumas linguagens de script não chegam a passar por esse processo afim de 
 
 ## Referências
 
+- [Compiler Explorer](https://godbolt.org/)
 - [Backus–Naur form](https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form)
 - [LLVM](https://llvm.org/docs/Passes.html)
 - [Static linking vs dynamic linking](https://stackoverflow.com/questions/1993390/static-linking-vs-dynamic-linking)

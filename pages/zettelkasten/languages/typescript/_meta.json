@@ -1,0 +1,12 @@
+{
+    "generics": "Generics",
+    "typescript": "TypeScript",
+    "constraints": "Constraints",
+    "basic": "Basic",
+    "tsc": "tsc",
+    "narrowing": "Narrowing",
+    "functions": "Functions",
+    "objetctTypes": "Object Types",
+    "typeManipulation": "Type Manipulation",
+    "falsy-truthy": "Falsy/Truthy"
+}

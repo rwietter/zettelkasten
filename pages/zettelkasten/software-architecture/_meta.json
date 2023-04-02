@@ -1,0 +1,8 @@
+{
+  "clean-architecture": "CA",
+  "BFF": "BFF",
+  "DDD": "DDD",
+  "hexagonal-architecture": "HEX",
+  "mvc": "MVC",
+  "index": "Architecture"
+}
