@@ -23,7 +23,7 @@
 
 > A forma normal de agir é raciocinando através da analogia com outras coisas, por isso tudo evolui no mesmo ritmo. Os primeiros princípios dizem que é mais importante é fazer algo diferenciado, pensar na realidade absoluta. Ou seja, não importa se alguém lhe diz que não vai dar certo, se você tentar, tem que dar certo, é pensar fora da caixa.
 
-# Notes
+# Panorama
 
 - Positividade
 - Postura ereta
