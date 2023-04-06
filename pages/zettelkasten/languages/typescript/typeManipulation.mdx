@@ -35,7 +35,7 @@ let myIdentity: GenericIdentityFn<number> = identity;
 
 #### Generic Classes
 
-Uma classe genérica tem uma forma semelhante a uma interface genérica. As classes genéricas têm uma lista de parâmetros de tipo genérico entre colchetes angulares (<>) após o nome da classe.
+// Uma classe genérica tem uma forma semelhante a uma interface genérica. As classes genéricas têm uma lista de parâmetros de tipo genérico entre colchetes angulares após o nome da classe.
 
 Assim como na interface, colocar o parâmetro de tipo na própria classe nos permite garantir que todas as propriedades da classe estejam funcionando com o mesmo tipo.
 
@@ -277,5 +277,3 @@ type DogMessageContents = MessageOf<Dog>; // never
 ### Mapped Types
 
 Os tipos mapeados permitem que você crie novos tipos com base em tipos existentes. Por exemplo, um tipo mapeado pode fazer cada propriedade de um tipo opcional ou somente leitura.
-
-```ts
