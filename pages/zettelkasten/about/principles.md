@@ -40,3 +40,4 @@
 - Elimine o que te distrai
 - Não consuma tanta informação
 - Tenha uma rotina
+- Tenha seu mindset focado em reduzir e abstrair

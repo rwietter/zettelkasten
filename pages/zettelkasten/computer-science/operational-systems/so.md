@@ -1,10 +1,4 @@
----
-title: SOs
-description: Sistemas operacionais são programas que gerenciam os recursos de um computador.
-icon: vscode-icons:file-type-codekit
----
-
-# Sistemas Operacionais
+# Aula 1 - Sistemas Operacionais
 
 O Sistema Operacional (SO) é um programa que gerencia os recursos de um computador. Ele é responsável por gerenciar a memória, os dispositivos de entrada e saída, os processos e as threads. O SO é o responsável por fazer a comunicação entre o hardware e o software.
 
