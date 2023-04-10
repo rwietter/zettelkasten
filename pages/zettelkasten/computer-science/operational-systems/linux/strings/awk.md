@@ -1,9 +1,3 @@
----
-title: AWK
-icon: vscode-icons:file-type-codekit
-description: AWK
----
-
 # AWK
 
 Awk é um comando útil e poderoso usado para correspondência de padrões, bem como para processamento de texto.

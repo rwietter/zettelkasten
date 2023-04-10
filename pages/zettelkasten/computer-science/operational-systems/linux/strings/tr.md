@@ -1,9 +1,3 @@
----
-title: Tr
-icon: vscode-icons:file-type-codekit
-description: Tr
----
-
 # Tr
 
 este comando é usado para traduzir os caracteres em um arquivo em algumas outras formas, como espremer os caracteres repetitivos e substituí-los pela ocorrência única desse caractere ou excluir um caractere. Isso pode ser feito usando diferentes opções disponíveis com o comando tee.

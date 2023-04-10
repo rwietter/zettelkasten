@@ -1,8 +1,3 @@
----
-title: Comece pelo mais difícil
-icon: vscode-icons:file-type-codekit
----
-
 # Comece pelo mais díficil
 
 **Regras para concluir tarefas:**

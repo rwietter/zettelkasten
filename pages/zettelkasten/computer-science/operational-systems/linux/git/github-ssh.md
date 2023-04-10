@@ -1,9 +1,3 @@
----
-title: SSH
-description: Connect to GitHub with SSH
-icon: vscode-icons:file-type-codekit
----
-
 # SSH
 
 ## Generate SSH key

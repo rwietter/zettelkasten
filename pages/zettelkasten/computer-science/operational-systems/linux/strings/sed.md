@@ -1,9 +1,3 @@
----
-title: Sed
-icon: vscode-icons:file-type-codekit
-description: Sed
----
-
 # Sed
 
 Sed é um comando poderoso para editar um 'fluxo' de texto. Ele pode ler a entrada de um arquivo de texto ou de uma entrada canalizada e processar a entrada em uma passagem.

@@ -1,8 +1,3 @@
----
-title: A Arte de Resolver Problemas
-icon: vscode-icons:file-type-codekit
----
-
 ### Compreensão do problema
 
 - Primeiramente, é necessário compreender o problema. Quais são as incógnitas, as condicionantes. A condicionante é suficiente para determinar a incógnita ? Ou é insuficiente ou redundante, ou contraditória ?

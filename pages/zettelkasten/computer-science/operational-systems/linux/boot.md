@@ -1,9 +1,3 @@
----
-title: Install
-icon: vscode-icons:file-type-codekit
-description: Booting Linux
----
-
 # Criar Pendrive Bootável
 
 ```bash

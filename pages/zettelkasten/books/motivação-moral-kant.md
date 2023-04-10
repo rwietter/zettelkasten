@@ -1,9 +1,3 @@
----
-title: Moral Kant
-description: A moralidade de Kant é uma moralidade deontológica, ou seja, uma moralidade que se baseia na ação em si, e não em suas consequências.
-icon: vscode-icons:file-type-codekit
----
-
 # O Problema da motivação moral em Kant
 
 Para Kant, a moralidade reside no bom senso natural e na razão.

@@ -15,7 +15,7 @@ O montador é um programa que traduz código assembly para binário.
 
 ### Linker
 
-O linker é um programa que liga os binários gerados pelo montador e pelo compilador, para que o programa possa, de fato, ser executado.
+O linker é um programa que liga os binários gerados pelo montador e pelo compilador, para que o programa possa, de fato, ser executado. Além disso, o linker pode modificar o binário para otimizar chamar funções e variáveis estáticas.
 
 ### Loader
 
