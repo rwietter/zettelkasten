@@ -47,7 +47,6 @@ const config = {
       titleTemplate: '%s – rwietter'
     }
   },
-  staticImage: true
 }
 
 export default config
