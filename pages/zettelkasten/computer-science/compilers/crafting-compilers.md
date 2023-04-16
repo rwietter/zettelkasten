@@ -44,6 +44,7 @@ O analisador léxico pode ser escrito usando ferramentas como JFlex ou Lex. Aqui
 
 - [JFlex tutorial](http://jflex.de/manual.html)
 - [Lex tutorial](https://web.cs.hacettepe.edu.tr/~bbm301/lectures/lecture3_lex.pdf)
+- [Tree Sitter](https://tree-sitter.github.io/tree-sitter/)
 
 Exemplos de implementações de analisadores léxicos:
 

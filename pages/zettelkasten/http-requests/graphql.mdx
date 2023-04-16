@@ -12,6 +12,30 @@ O GraphQL vem com um conjunto padrão de tipos, mas um servidor GraphQL também 
 
 O *tipo de operação* é *query*, *mutation* ou *subscription* e descreve o tipo de operação que você pretende fazer. O tipo de operação é obrigatório, a menos que você esteja usando a sintaxe abreviada de consulta, caso em que você não pode fornecer um nome ou definições de variável para sua operação.
 
+**GraphQL Vs REST Calls**
+
+| Requirement	                 | REST	            | GraphQL      |
+| ---------------------------- | ---------------- | ------------ |
+| Fetching data objects	       | GET              |	query        |
+| Inserting data               | POST	            | mutation     |
+| Updating/deleting data       | PUT/PATCH/DELETE | mutation     |
+| Watching/subscribing to data | -                | subscription |
+
+
+**Status Code**
+
+| Status Code | REST         | GraphQL |
+| ----------- | ------------ | ------- |
+| 200         | OK           | Success |
+| 400         | Bad Request  | -       |
+| 401         | Unauthorized | -       |
+
+**Armazenamento**
+
+Com as APIs REST, todos os pontos finais GET podem ser armazenados em cache no lado do servidor ou usando uma CDN. Eles também podem ser armazenados em cache pelo navegador e marcados pelo cliente para invocações frequentes. O GraphQL não segue a especificação HTTP e é atendido em um único ponto final, geralmente (/graphql). Portanto, as consultas não podem ser armazenadas em cache da mesma maneira que as APIs REST.
+
+No entanto, o cache no lado do cliente é melhor que o REST por causa das ferramentas. Alguns dos clientes que implementam a camada de cache (Apollo Client, URQL) utilizam o esquema e o sistema de tipos do GraphQL usando Introspection para permitir que eles mantenham um cache no lado do cliente.
+
 ---
 
 ### Typedefs
@@ -414,6 +438,34 @@ hero {
 }
 ```
 
+Other examples:
+
+```graphql
+query fetchAuthor {
+  author(id: 1) {
+    name
+    profile_pic_large: profile_pic(size: "large")
+    profile_pic_small: profile_pic(size: "small")
+  }
+}
+
+query fetchAuthor {
+  author(id: 1) {
+    name
+    profile_pic(size: "large") {
+      url
+      width
+      height
+    }
+    profile_pic(size: "small") {
+      url
+      width
+      height
+    }
+  }
+}
+```
+
 ---
 
 ### **Variáveis**
@@ -444,9 +496,9 @@ addTodo({ variables: { title, description, completed: false } });
 
 > `@include`: por exemplo, podemos imaginar um componente de UI que possui uma visão resumida e detalhada, onde um inclui mais campos que o outro.
 
-• `@include(if: Boolean)`Apenas inclua este campo no resultado se o argumento for `true`.
-• `@skip(if: Boolean)`Ignore este campo se o argumento for `true`.
-> 
+- `@include(if: Boolean)`Apenas inclua este campo no resultado se o argumento for `true`.
+- `@skip(if: Boolean)`Ignore este campo se o argumento for `true`.
+- `@deprecated(reason: String) - marca o campo como obsoleto`
 
 ```graphql
 query Hero($episode: Episode, $withFriends: Boolean!) {
@@ -508,7 +560,31 @@ query Hero($episode: Episode, $withFriends: Boolean!) {
 
 ### **Inline Fragments**
 
+Os fragmentos tornam o GraphQL ainda mais reutilizável. Se houver algumas partes do documento que reutilizam o mesmo conjunto de campos em um determinado tipo, o fragmento pode ser poderoso.
+
+```graphql
+fragment authorFields on author {
+  id
+  name
+  profile_pic
+  created_at
+}
+
+query fetchAuthor {
+  author(id: 1) {
+    ...authorFields
+  }
+}
+
+query fetchAuthors {
+  author(limit: 5) {
+    ...authorFields
+  }
+}
+```
+
 - Se você estiver consultando um campo que retorna uma interface ou um tipo de união, precisará usar *fragmentos embutidos* para acessar dados no tipo concreto subjacente.
+
 
 ```graphql
 # interface

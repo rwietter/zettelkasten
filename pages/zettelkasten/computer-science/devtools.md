@@ -11,6 +11,7 @@
 #### Front UI and Tools
 
 - [One line layouts](https://web.dev/one-line-layouts/)
+- [Glassmorphism CSS Generator](https://ui.glass/generator/)
 - [Landing Animations](https://www.landing.love/)
 - [JSON Visio Graph](https://jsonvisio.com/editor)
 - [Tools & Page divider](https://omatsuri.app/page-dividers)
