@@ -16,6 +16,8 @@ function sum(arr) { // O(1)
 
 ![O(n)](./assets/linear.png)
 
+![geogebra-linear](./assets/geogebra-linear.png)
+
 ---
 
 # O(2n) | O(3n) etc...

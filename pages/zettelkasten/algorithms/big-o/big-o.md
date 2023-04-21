@@ -56,7 +56,15 @@ Dado um array de tamanho 20, o que é o pior cenário possível ?
 | c^n          |   k^100      |   k^1000    |
 | n!           |   9.33262154e+157 | 1.216451e+2567 |
 
+![BigO](./notations/assets/bigo.png)
 
+Where:
+- Green: O(1) Constant Time
+- Red: O(n) Linear Time
+- Orange: O(n^2) Quadratic Time
+- Dark: O(n^3) Cubic Time
+- Magenta: O(2^n) Exponential Time
+- Blue: O(n!) Factorial Time
 
 ## O que pode tomar tempo em uma função ?
 
@@ -73,7 +81,11 @@ Dado um array de tamanho 20, o que é o pior cenário possível ?
 3. Entradas diferentes devem ter variáveis diferentes. O(a b). As matrizes A e B aninhadas seriam O(a*b), onde
    1. + a e b estão em ordens diferentes (não aninhadas)
    2. * a e b estão na mesma ordem (aninhadas)
-4. Drop Non-dominant terms (Descartar termos não dominantes, ex: O(n^2 + n) = O(n^2) or O(n^2 + n^3) = O(n^3))
+4. Drop Non-dominant terms (Descartar termos não dominantes)
+   - O(n^2 + n) = O(n^2)
+   - O(n^2 + n^3) = O(n^3)
+   - O(n^2 * k) = O(n^2)
+   - O(3^n) = O(k^n)
 
 ### Worst Case
 

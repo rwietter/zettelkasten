@@ -6,14 +6,16 @@ Por exemplo, dado um array de tamanho 5, o loop externo vai percorrer 5 vezes e 
 
 ```js
 function sum(arr) {
-  let sum = 0;
-  for (let i = 0; i < arr.length; i++) {
-    for (let j = 0; j < arr.length; j++) {
-      sum += arr[i] + arr[j];
+  let sum = 0; // O(1)
+  for (let i = 0; i < arr.length; i++) { // O(n)
+    for (let j = 0; j < arr.length; j++) { // O(n)
+      sum += arr[i] + arr[j]; // O(1)
     }
   }
-  return sum;
+  return sum; // O(1)
 }
+
+// O(n * n) = O(n^2)
 ```
 
 Também pode ser assim, onde temos uma função dentro de um for loop:
@@ -43,3 +45,5 @@ function funChallenge(input) {
 ```
 
 Vale lembrar que mesmo que `let stranger = true`, `a++` e `console.log(length)` estão dentro de loops, sua complexidade de tempo ainda é considerada O(1), ou tempo constante, porque seu tempo de execução não depende do tamanho da entrada. Além disso, envolvem atribuições de variáveis simples e operações aritméticas que não requerem nenhum loop ou cálculos complexos.
+
+![quadratic time](./assets/quadratic.png)
