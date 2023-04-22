@@ -33,15 +33,15 @@ Dado um array de tamanho 20, o que é o pior cenário possível ?
 
 | Notation     | Name               | Example         |
 |--------------|--------------------|-----------------|
-| O(1)         | Constant Time      | O(1)            |
-| O(log n)     | Logarithmic Time   | O(log n)        |
-| O(n)         | Linear Time        | O(n)            |
-| O(n log n)   | Logarithmic Time   | O(n * log (n))  |
+| O(1)         | Constant           | O(1)            |
+| O(log n)     | Logarithmic        | O(log n)        |
+| O(log(n)^c)  | Polylogarithmic    | O(log(n)^2)     |
+| O(n)         | Linear             | O(n)            |
+| O(n log(n))  | Linearithmic       | O(n * log(n))   |
 | O(n+k)       | Linear Time        | O(n+k)          |
-| O(n^c)       | Polynomial Time    | O(n^2)          |
-| O(c^n)       | Exponential Time   | O(2^n)          |
+| O(n^c)       | Polynomial Time    | O(n^2) - O(n^3) |
+| O(c^n)       | Exponential Time   | O(2^n) - O(3^n) |
 | O(n!)        | Factorial Time     | O(n!)           |
-
 
 | n            |   n = 100    |  n = 1000   |
 |--------------|--------------|-------------|
@@ -91,6 +91,8 @@ Where:
 
 Digamos que temos um algoritmo que percorre um array e imprime cada elemento. O que é o pior cenário possível? O pior cenário possível é quando o array tem 10 elementos e o algoritmo precisa pergorrer até o último eleemento da lista. Então, o pior cenário possível é O(n), onde n é o tamanho do array.
 
+Utiliza-se a notação de pior caso possível pois, em geral, é o que se espera que aconteça. Se o algoritmo for executado em um cenário melhor, o tempo de execução será menor. Se o algoritmo for executado em um cenário pior, o tempo de execução será como previsto e, portanto, não haverá surpresas.
+
 ## O que causa a complexidade do espaço?
 
 - Variables
@@ -98,7 +100,9 @@ Digamos que temos um algoritmo que percorre um array e imprime cada elemento. O 
 - Function calls
 - Allocations
 
-## Linear Time
+## Funções
+
+### Linear Time
 
 A complexidade de tempo linear, denotada por O(n), é uma complexidade computacional que descreve a quantidade de tempo que um algoritmo leva para ser executado. Isso significa que o tempo de execução de um algoritmo aumenta linearmente com o tamanho da entrada. Em outras palavras , se um algoritmo tem uma iteração que itera sobre um tamanho de entrada n, diz-se que ele tem uma complexidade de tempo de ordem O(n).
 
@@ -106,13 +110,13 @@ O tempo linear é a melhor complexidade de tempo possível em situações em que
 
 A complexidade de tempo linear é classificada como um algoritmo de tempo polinomial, o que significa que tem uma complexidade de tempo de O(n^α) para alguma constante α > 1. Outros exemplos de algoritmos de tempo polinomial incluem complexidade de tempo quadrática O(n^2) e complexidade de tempo cúbico O(n^3)
 
-## Polynomial Time
+### Polynomial Time
 
 Complexidade de tempo polinomial é uma medida da eficiência de um algoritmo. Diz-se que um algoritmo tem complexidade de tempo polinomial se seu tempo de execução for limitado por uma função polinomial do tamanho da entrada. Isso significa que o tempo de execução do algoritmo cresce no máximo como alguma potência fixa do tamanho da entrada. Complexidade de tempo polinomial é considerada uma propriedade desejável de um algoritmo porque indica que o algoritmo é eficiente e que seu tempo de execução não cresce muito rapidamente conforme o tamanho da entrada aumenta.
 
 A complexidade do tempo polinomial é considerada relativamente eficiente para fins práticos, pois o tempo de execução do algoritmo não cresce muito rapidamente com o tamanho da entrada. Em contraste, algoritmos com complexidade de tempo exponencial, como O(2^n) ou O(3^n), são considerados muito ineficientes e impraticáveis para muitos problemas do mundo real. Assim, O(n^3) é uma função polinomial de grau 3, enquanto O(n^2) é uma função polinomial de grau 2.
 
-### Quasi-polynomial Time
+#### Quasi-polynomial Time
 
 Algoritmos de tempo quase polinomial são algoritmos que executam mais do que o tempo polinomial, mas não tão longos quanto o tempo exponencial. O tempo de execução de pior caso de um algoritmo de tempo quase polinomial é 2^(O(log^c(n))), para algum c fixo > 0
 
@@ -121,4 +125,6 @@ Algoritmos de tempo quase polinomial são algoritmos que executam mais do que o 
 
 - [Big-O Wikipedia](https://en.wikipedia.org/wiki/Big_O_notation)
 - [Big-O Wikipedia pt-BR](https://pt.wikipedia.org/wiki/Grande-O)
-- 
+- [Polynomial time and exponential time](https://stackoverflow.com/questions/4317414/polynomial-time-and-exponential-time)
+- [Comparing Algorithms](https://cooervo.github.io/Algorithms-DataStructures-BigONotation/index.html)
+- [BigO Cheatsheet](https://www.bigocheatsheet.com/)
