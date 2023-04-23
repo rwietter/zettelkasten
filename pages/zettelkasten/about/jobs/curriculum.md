@@ -21,9 +21,18 @@ Part of ZTM Course on Mastering the Coding Interview.
 
 ---
 
+Write Curriculum
+
+- [How to write an effective developer resume: Advice from a hiring manager](https://stackoverflow.blog/2020/11/25/how-to-write-an-effective-developer-resume-advice-from-a-hiring-manager/)
+- [Cake Resume](https://www.cakeresume.com/Engineering-resume-samples)
+- [Google Docs Model](https://docs.google.com/document/d/1TEd6mfcFzYubJhpTJD2lL-4cl2IaW_Sf/edit?pli=1#heading=h.h5irs2mwnuw5)
+
+---
+
 Find Jobs
 
 - [LinkedIn](https://www.linkedin.com/jobs/)
 - [Hackernews](https://news.ycombinator.com/jobs)
 - [Angel](https://wellfound.com/)
 - [We Work Remotely](https://weworkremotely.com/)
+- [JobScan](https://www.jobscan.co/)
