@@ -43,3 +43,82 @@ Ele alia as vantagens de maior interatividade do modelo 1:1 à maior escalabilid
 ### Thread safety
 
 Thread safety é um conceito de programação de computadores aplicável no contexto de programas multi-thread. Um código é dito thread-safe se ele apenas manipula estruturas de dados compartilhadas de uma forma que garanta uma execução segura através de várias threads ao mesmo tempo. A segurança de thread é uma propriedade que permite que o código rode em ambientes multi-thread através do restabelecimento de algumas das correspondências entre o fluxo de controle real e o texto do programa, por meio de sincronização.
+
+---
+
+## Aula (Sistemas Operacionais)
+
+Thread é um core da CPU, um processo que executa em uma thread é monothread e um processo que executa em mais de uma thread é multithread. A concorrência permite que tarefas concorram para executar nessas threads, quando executadas em multithread tem mais desempenho, dado que tem mais núcleos do processador processando as tarefas.
+
+Nas threads o processador faz switch entre as tarefas muito rapitamente, para que todas tenham um pequeno tempo de processamento. Ou seja, concorrência tem a ver com dividir o tempo de processamento de tarefas. A concorrência também são assíncronas.
+
+No paralelismo, temos multithreads executando em paralelo, como dois caixas de supermercado operando ao mesmo tempo.
+
+Thread é uma entidade independente de um processo (fluxo de execução de um processo)
+- A thread possui um contexto local chamado de Thread Local Storage (TLS), composto pelos registradores e uma pilha em memória para guardar variáveis locais e fazer chamadas de função.
+
+- Processo: unico fluxo de execução
+- Threads: multiplos fluxos de execução
+
+Threads, muitas vezes denominadas de processos leves (LWP)
+
+- Cada um core físico tem duas instâncias de threads no contexto de hardware
+- No contexto de software, as threads são milhares (1:1, N:M, N:N) - concorrência
+- Nas threads de linguagem de programação, embutidas em bibliotecas
+
+- Escalonamento de threads
+
+- O Projeto de software, a cooperação, o desempenho, autonomia foram concebidas pois poderia obter mais desempenho.
+
+- A multithread permite que, por exemplo, 100 processos possam ser dividos entre x threads no processador o que permite a execução em conjunta de multitarefas.
+
+## Threads de Usuário e de Núcleo
+
+- Suporte a thread é fornecido pelo sistema operacional (Kernel-Level Thread)
+  - Implementaa através de uma biblioteca de uma determinada linguagem, no caso de uma User-Level Thread (ULT)
+
+- As threads de núcleo também incluem atividades internas como rotinas de drivers e de gerência.
+
+- Para que uma thread existe, ela precisa ser executado dentro de um processo.
+- Processos  agrupam recursos de endereçamento e memória
+  - Threads são escalonadas pela CPU
+
+## Ciclos de vidas da Thread
+
+- Estado novo: inicio do ciclo
+- Estado executável: executa
+- Estado de espera: aguarda
+- Desconhecido: inanição
+  
+
+## Benefícios do uso de threads
+
+- Velocidade de Criação das  Threads
+  - as threads são mais fáceis de criar e destruir que os processos pois elas não tem quaisquer recursos associados a elas.
+- Capacidade de Resposta
+  - as threads são mais fáceis de criar e destruir que os processos pois elas não tem quaisquer recursos associados a elas.
+- Compartilhamento de Recursos
+  - todos os recursos alocados e utilizados pelo processo aos quais pertencem são compartilhados pelos threads.
+- Economia
+  - como os threads compartilham recursos dos processos aos quais pertencem, é mais econômico criar e realizar a troca de contexto de threads.
+- Arquiteturas Multiprocessadas
+  - executar cada uma das threads criadas para um mesmo processo em paralelo
+- Desempenho
+  - obtido quando há grande quantidade de computação e E/S, os threads permitem que essas atividades se sobreponham e, logo, melhore o desempenho da aplicação
+
+
+## Modelos de Multithreading
+
+Threads são a unidade básica de  utilização da UCP e compreende
+• um ID de thread, um  contador de programa, um  conjunto de registradores  e uma pilha. 
+• Cada thread compartilha com os  outros threads do mesmo processo 
+• seu código, o espaço de  enderaçamento e outros  recursos, como arquivos e  sinais. 
+• Processos com múltiplos threads  podem realizar mais de uma tarefa por vez.
+
+- Um navegador de internet pode fazer um thread para exibir imagens, outro para texto e um terceiropara recuperar dados da rede, de forma independente.
+
+## Modelos de Multithreading
+
+Muitos-para-um: muitas threads de usuário para um de kernel
+Um-para-um: cada thread de usuário para cada thread de kernel
+Muitos-para-Muitos: muitas threads de usuário para muitas threads de kernel

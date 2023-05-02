@@ -42,3 +42,15 @@ Ademais, acrescento a esse método o seguinte, que chamo de "TYA" (How to teach 
 7. Criar um documento com anotações que incluem um mapa mental;
 8. No documento, responda as perguntas do passo 3;
 9. Opcional, se entendeu beleza, se não, refaça o passo 2 em diante.
+
+---
+
+## Assuntos
+
+**Type System**
+- Discrete math
+- Set theory
+- Type theory
+- Type systems
+- Typecheckers
+- Compilers

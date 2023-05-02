@@ -102,6 +102,13 @@ Utiliza-se a notação de pior caso possível pois, em geral, é o que se espera
 
 ## Funções
 
+Dizemos que duas funções são da mesma ordem se elas se comportam de maneira semelhante para grandes valores de n, ou seja, f(n) ≈ g(n) para n. Considere as funções f(n) = n^2 e g(n) = n^2 + 2n + 3
+
+n              1   10    20      50    100    200    300     400          500      1000
+n^2            1  100    400     2500  10000  40000  90000   160000       250000   100000
+n2 + 2n + 3    6  123    443     2603  10203  40403  90603   160803       251003   1002003
+2^n            2  1024  1048576  10^15 10^30  10^60  2×10^90  2.5×10^120  3×10^150 10^301
+
 ### Linear Time
 
 A complexidade de tempo linear, denotada por O(n), é uma complexidade computacional que descreve a quantidade de tempo que um algoritmo leva para ser executado. Isso significa que o tempo de execução de um algoritmo aumenta linearmente com o tamanho da entrada. Em outras palavras , se um algoritmo tem uma iteração que itera sobre um tamanho de entrada n, diz-se que ele tem uma complexidade de tempo de ordem O(n).
@@ -120,6 +127,9 @@ A complexidade do tempo polinomial é considerada relativamente eficiente para f
 
 Algoritmos de tempo quase polinomial são algoritmos que executam mais do que o tempo polinomial, mas não tão longos quanto o tempo exponencial. O tempo de execução de pior caso de um algoritmo de tempo quase polinomial é 2^(O(log^c(n))), para algum c fixo > 0
 
+## Grafos
+
+A eficiência de um algoritmo de grafos pode ser medida como uma função do número de vértices ou arestas do grafo de entrada.
 
 ## Referências
 
