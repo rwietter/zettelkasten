@@ -1,6 +1,6 @@
 {
   "about": "About",
-  "todo": "Todo",
+  "english": "English",
   "TIL": "TIL",
   "computer-science": "Science",
   "software-architecture": "Architecture",
@@ -26,5 +26,6 @@
   "cnh": "CNH",
   "crypto": "Crypto",
   "vocabulary": "Vocabulary",
-  "hardware": "Hardware"
+  "hardware": "Hardware",
+  "jobs": "Jobs"
 }
