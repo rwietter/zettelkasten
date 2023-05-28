@@ -1,9 +1,8 @@
 {
-  "working": "Working",
   "insights": "Insights",
-  "método-estudo": "TYA",
-  "english": "English",
-  "reading": "Reading",
+  "TYA": "TYA",
   "quotes": "Quotes",
-  "principles": "Principles"
+  "principles": "Principles",
+  "references": "References",
+  "twitter-links": "Twitter Links"
 }
