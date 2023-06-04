@@ -1,5 +1,23 @@
 {
   "index": "About Me",
   "contact": "Contact Me",
-  "zettelkasten": "Zettelkasten"
+  "about": "About",
+  "dev": "Dev",
+  "english": "English",
+  "computer-science": "Science",
+  "languages": "Languages",
+  "algorithms": "Algorithms",
+  "operational-systems": "SOs",
+  "git": "Git",
+  "networks": "Networks",
+  "books": "Books",
+  "artificial-intelligence": "AI",
+  "math": "Math",
+  "agile": "Agile",
+  "investments": "Investments",
+  "design": "Design",
+  "web3": "Web3",
+  "blockchain": "Blockchain",
+  "cnh": "CNH",
+  "hardware": "Hardware"
 }

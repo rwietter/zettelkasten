@@ -17,6 +17,9 @@ const config = {
     dark: 172,
     light: 203,
   },
+  sidebar: {
+    defaultMenuCollapseLevel: 1,
+  },
   logoLink: '/',
   project: {
     link: 'https://github.com/rwietter',
