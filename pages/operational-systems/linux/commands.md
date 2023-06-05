@@ -64,6 +64,39 @@ sudo pacman -S lscpu
 lscpu
 ```
 
+Nproc: número de processadores disponíveis
+```shell
+sudo pacman -S coreutils
+nproc
+```
+
+### Outros genéricos
+```shell
+ls [path] -a -l -h -R # listar arquivos e diretórios recursivamente
+cd [path] # mudar de diretório
+cp [path ou file] [dest] -r # copiar arquivos ou diretórios recursivamente
+mv [path ou file] [dest] -r # mover arquivos ou diretórios recursivamente
+rm [path ou file] [dest] -r -f # apagar arquivos ou diretórios recursivamente forçando a exclusão
+mkdir [path] # criar diretório
+rmdir [path] -r # remover diretório
+touch [file] # cria um arquivo vazio
+nano [file] # editor de texto de linha de comando
+vi [file] # editor de texto de linha de comando
+sudo # executa o comando com permissão de super usuário
+clear # limpa a tela do terminal
+head [file] -n=[num] # imprime as 10 primeiras linhas do arquivo, ou as [num] linhas
+tail [file] -n=[num] # imprime as 10 últimas linhas do arquivo, ou as [num] linhas'
+find # procurar por arquivos e diretórios
+grep # procura um padrão (de texto ou regex) no arquivo ou na string
+sed # stream editor, pode fazer transformações de texto no arquivo ou string
+awk # procura um padrão (de texto ou regex) no arquivo ou na string, mas usa uma linguagem de processamento
+top # lista os processos sendo executados no pc
+env # lista ou cria variáveis de ambiente na seção do terminal
+chmod # muda o acesso ou permissão do arquivo, ou diretório
+chown # muda o proprietário do arquivo ou diretório
+wget [options] [url] # Realiza requisições HTTP para a URL informada
+```
+
 ## Logs
 
 ### Strace
