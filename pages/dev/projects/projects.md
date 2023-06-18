@@ -1,7 +1,13 @@
 # Projects
 
+## Tutorials
+
+- [Express HTMx](https://codecapsules.io/docs/tutorials/build-express-htmx/)
+
 ## Useful libraries
 
+- [Codehike](https://github.com/code-hike/codehike)
+- [Codehike](https://github.com/code-hike/codehike)
 - [React Three Fiber](https://codesandbox.io/s/displacement-how-to-2rvnnt?file=/src/App.js:87-104)
 - [tRPC](https://github.com/trpc/trpc)
 - [Ts-pattern](https://github.com/gvergnaud/ts-pattern)

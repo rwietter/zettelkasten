@@ -2,7 +2,7 @@
     "effects": "Effects",
     "fonts": "Fonts",
     "bem": "BEM",
-    "namespaces": "Namespaces",
+    "namespace": "Namespaces",
     "tools": "Tools",
     "content-visibility": "Content Visibility",
     "font-metrics-override-descriptors": "Font Metrics",
